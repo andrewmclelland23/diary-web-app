@@ -23,7 +23,15 @@ class Bookmarks
     conn.exec("INSERT INTO bookmarks (url, title) VALUES ('#{url}', '#{title}')")
   end
 
+  def self.delete_bookmark(title)
+    ENV['ENVIRONMENT'] == 'test' ? env = 'bookmark_manager_test' : env = 'bookmark_manager'
+    conn = PG.connect(dbname: env)
+    conn.exec("DELETE FROM bookmarks WHERE title='#{title}';")
+  end
+
   def create_link_html
   "<a name='#{@title}' href='#{@url}'>#{@title}</a>"
   end
+
+
 end
