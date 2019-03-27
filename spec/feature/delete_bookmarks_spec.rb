@@ -1,7 +1,7 @@
 feature 'deleting bookmarks' do
   scenario 'A user can delete a bookmarks and see that its gone' do
     add_2_bookmarks
-    visit '/delete_bookmark'
+    visit 'bookmarks/delete'
     fill_in 'title', with: 'BBC'
     click_button 'Submit'
 

@@ -11,3 +11,11 @@ def add_2_bookmarks
   fill_in('title', with: 'Google')
   click_button 'Submit'
 end
+
+def add_bbc_bookmark
+  visit '/'
+  click_link 'Add Bookmark'
+  fill_in('url', with: 'http://www.bbc.co.uk')
+  fill_in('title', with: 'BBC')
+  click_button 'Submit'
+end

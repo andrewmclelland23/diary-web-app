@@ -8,11 +8,11 @@ class BookmarkManager < Sinatra::Base
     erb :index
   end
 
-  get '/add_bookmark' do
-    erb :add_bookmark
+  get '/bookmarks/add' do
+    erb :'bookmarks/add'
   end
 
-  post '/add_bookmark' do
+  post '/bookmarks/add' do
     Bookmarks.add_bookmark(params[:url], params[:title])
     redirect '/bookmarks'
   end
@@ -22,11 +22,11 @@ class BookmarkManager < Sinatra::Base
     erb :bookmarks
   end
 
-  get '/delete_bookmark' do
-    erb :delete_bookmark
+  get '/bookmarks/delete' do
+    erb :'bookmarks/delete'
   end
 
-  post '/delete_bookmark' do
+  post '/bookmarks/delete' do
     Bookmarks.delete_bookmark(params[:title])
     redirect '/bookmarks'
   end
