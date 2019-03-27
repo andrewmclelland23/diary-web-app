@@ -2,23 +2,28 @@ require 'pg'
 
 class Bookmarks
 
-  def initialize
-    if ENV['ENVIRONMENT'] == 'test'
-      @conn = PG.connect(dbname: 'bookmark_manager_test')
-    else
-      @conn = PG.connect(dbname: 'bookmark_manager')
-    end
+  def initialize(title, url)
+    @title = title
+    @url = url
   end
 
-  def display_all
-    @conn.exec("SELECT * FROM bookmarks") do |result|
+  def self.display_all
+    ENV['ENVIRONMENT'] == 'test' ? env = 'bookmark_manager_test' : env = 'bookmark_manager'
+    conn = PG.connect(dbname: env)
+    conn.exec("SELECT * FROM bookmarks") do |result|
       return result.map do |row|
-        row["url"]
+        Bookmarks.new(row["title"], row["url"]).create_link_html
       end
     end
   end
 
-  def add_bookmark(url)
-    @conn.exec("INSERT INTO bookmarks (url) VALUES ('#{url}')")
+  def self.add_bookmark(url, title)
+    ENV['ENVIRONMENT'] == 'test' ? env = 'bookmark_manager_test' : env = 'bookmark_manager'
+    conn = PG.connect(dbname: env)
+    conn.exec("INSERT INTO bookmarks (url, title) VALUES ('#{url}', '#{title}')")
+  end
+
+  def create_link_html
+  "<a name='#{@title}' href='#{@url}'>#{@title}</a>"
   end
 end
