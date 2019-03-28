@@ -7,6 +7,6 @@ def test_db_setup
   connection = PG.connect(dbname: 'bookmark_manager_test')
 
   # Clear the bookmarks table
-  connection.exec("TRUNCATE bookmarks;")
-  connection.exec("ALTER SEQUENCE bookmarks_id_seq RESTART WITH 1;")
+  connection.exec("DROP TABLE bookmarks;")
+  connection.exec("CREATE TABLE bookmarks(id SERIAL PRIMARY KEY, url VARCHAR(60), title VARCHAR(50));")
 end

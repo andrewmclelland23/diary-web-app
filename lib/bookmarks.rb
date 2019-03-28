@@ -38,4 +38,11 @@ class Bookmarks
     conn = PG.connect(dbname: env)
     conn.exec("UPDATE bookmarks SET url = '#{url}', title = '#{title}' WHERE id = '#{id}'")
   end
+
+  def self.find(id:)
+    ENV['ENVIRONMENT'] == 'test' ? env = 'bookmark_manager_test' : env = 'bookmark_manager'
+    conn = PG.connect(dbname: env)
+    result = conn.exec("Select * FROM bookmarks WHERE id = #{id};")
+    Bookmarks.new(result[0]['title'], result[0]['url'], result[0]['id'])
+  end
 end

@@ -38,4 +38,28 @@ describe Bookmarks do
       expect(Bookmarks.display_all).to eq []
     end
   end
+
+  describe '#update_bookmark' do
+    it 'should udpate a bookmark in the database' do
+      bm = Bookmarks.add_bookmark('http://www.makersacademy.com', 'Makers')
+      Bookmarks.update_bookmark(title: 'Snakers', url: 'http://www.snakersacademy.com', id: bm.id)
+      updated_bm = Bookmarks.display_all.first
+      expect(updated_bm.title).to eq 'Snakers'
+      expect(updated_bm.url).to eq 'http://www.snakersacademy.com'
+      expect(updated_bm.id).to eq bm.id
+    end
+  end
+
+  describe 'find' do
+    it 'returns the requested bookmark object' do
+      bookmark = Bookmarks.add_bookmark('http://www.makersacademy.com', 'Makers Academy')
+
+      result = Bookmarks.find(id: bookmark.id)
+
+      expect(result).to be_a Bookmarks
+      expect(result.id).to eq bookmark.id
+      expect(result.title).to eq 'Makers Academy'
+      expect(result.url).to eq 'http://www.makersacademy.com'
+    end
+  end
 end
