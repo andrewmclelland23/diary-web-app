@@ -1,12 +1,10 @@
 feature 'deleting bookmarks' do
   scenario 'A user can delete a bookmarks and see that its gone' do
     add_2_bookmarks
-    visit 'bookmarks/delete'
-    fill_in 'title', with: 'BBC'
-    click_button 'Submit'
+    visit '/bookmarks'
+    first('.bookmark').click_button 'Delete'
 
-    expect(page).to_not have_content "BBC"
-    expect(page).to have_content "Google"
-
+    expect(current_path).to eq '/bookmarks'
+    expect(page).not_to have_link('BBC', href: 'http://www.bbc.co.uk')
   end
 end

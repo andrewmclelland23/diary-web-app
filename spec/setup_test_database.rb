@@ -8,4 +8,5 @@ def test_db_setup
 
   # Clear the bookmarks table
   connection.exec("TRUNCATE bookmarks;")
+  connection.exec("ALTER SEQUENCE bookmarks_id_seq RESTART WITH 1;")
 end

@@ -2,9 +2,12 @@ require 'pg'
 
 class Bookmarks
 
-  def initialize(title, url)
+  attr_reader :title, :url, :id
+
+  def initialize(title, url, id)
     @title = title
     @url = url
+    @id = id
   end
 
   def self.display_all
@@ -12,7 +15,7 @@ class Bookmarks
     conn = PG.connect(dbname: env)
     conn.exec("SELECT * FROM bookmarks") do |result|
       return result.map do |row|
-        Bookmarks.new(row["title"], row["url"]).create_link_html
+        Bookmarks.new(row["title"], row["url"], row["id"])
       end
     end
   end
@@ -20,18 +23,13 @@ class Bookmarks
   def self.add_bookmark(url, title)
     ENV['ENVIRONMENT'] == 'test' ? env = 'bookmark_manager_test' : env = 'bookmark_manager'
     conn = PG.connect(dbname: env)
-    conn.exec("INSERT INTO bookmarks (url, title) VALUES ('#{url}', '#{title}')")
+    result = conn.exec("INSERT INTO bookmarks (url, title) VALUES ('#{url}', '#{title}') RETURNING id, title, url;")
+    Bookmarks.new(result[0]['title'], result[0]['url'], result[0]['id'])
   end
 
-  def self.delete_bookmark(title)
+  def self.delete_bookmark(id:)
     ENV['ENVIRONMENT'] == 'test' ? env = 'bookmark_manager_test' : env = 'bookmark_manager'
     conn = PG.connect(dbname: env)
-    conn.exec("DELETE FROM bookmarks WHERE title='#{title}';")
+    conn.exec("DELETE FROM bookmarks WHERE id = #{id};")
   end
-
-  def create_link_html
-  "<a name='#{@title}' href='#{@url}'>#{@title}</a>"
-  end
-
-
 end
