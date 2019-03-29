@@ -1,6 +1,6 @@
 <h1>All your diary entries are listed below...</h1>
   <ol>
-    <% @list.each do |title| %>
-      <li> <%= title %> </li>
+    <% @list.each do |diary_entry| %>
+      <li><a href='view/<%= diary_entry.id %>'> <%= diary_entry.title %> </a></li>
     <% end %>
   </ol>

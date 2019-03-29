@@ -20,6 +20,15 @@ class DiaryEntry
   def self.list
     ENV['ENVIRONMENT'] == 'test' ? env = '_test' : env = ""
     conn = PG.connect(dbname: "diary#{env}")
-    result = conn.query("SELECT title FROM entries").map { |record| record['title'] }
+    conn.query("SELECT * FROM entries").map do |record|
+      DiaryEntry.new(id: record['id'], title: record['title'], entry: record['entry'])
+    end
+  end
+
+  def self.find(id:)
+    ENV['ENVIRONMENT'] == 'test' ? env = '_test' : env = ""
+    conn = PG.connect(dbname: "diary#{env}")
+    record = conn.query("SELECT * FROM entries WHERE id = #{id}")
+    DiaryEntry.new(id: record[0]['id'], title: record[0]['title'], entry: record[0]['entry'])
   end
 end

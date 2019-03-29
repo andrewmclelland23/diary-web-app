@@ -23,5 +23,10 @@ class DiaryApp < Sinatra::Base
     redirect '/diary/list'
   end
 
+  get '/diary/view/:id' do
+    @diary_entry = DiaryEntry.find(id: params[:id])
+    erb :'diary/view'
+  end
+
   run! if app_file == $0
 end
