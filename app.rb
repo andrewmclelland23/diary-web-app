@@ -9,8 +9,7 @@ class DiaryApp < Sinatra::Base
   end
 
   get '/diary/list' do
-    ENV['ENVIRONMENT'] == 'test' ? conn = PG.connect(dbname: 'diary_test') : conn = PG.connect(dbname: 'diary')
-    conn.query("SELECT title FROM entries").map { |record| record['title'] }
+    DiaryEntry.list
   end
 
   get '/diary/add' do
@@ -18,8 +17,7 @@ class DiaryApp < Sinatra::Base
   end
 
   post '/diary/add' do
-    ENV['ENVIRONMENT'] == 'test' ? conn = PG.connect(dbname: 'diary_test') : conn = PG.connect(dbname: 'diary')
-    conn.exec("INSERT INTO entries (title, entry) VALUES ('#{params[:title]}', '#{params[:entry]}')")
+    DiaryEntry.add(title: params[:title], entry: params[:entry])
     redirect '/diary/list'
   end
 
