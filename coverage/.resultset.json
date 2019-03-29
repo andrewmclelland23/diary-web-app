@@ -3,16 +3,28 @@
     "coverage": {
       "/Users/vi1551/Makers/month_1/week_4/solo_work/diary/app.rb": [
         1,
-        null,
-        null,
-        1,
-        null,
-        1,
         1,
         null,
         null,
         1,
+        null,
         1,
+        0,
+        null,
+        null,
+        1,
+        3,
+        7,
+        null,
+        null,
+        1,
+        3,
+        null,
+        null,
+        1,
+        3,
+        3,
+        3,
         null,
         null,
         1,
@@ -28,8 +40,18 @@
         1,
         null,
         null
+      ],
+      "/Users/vi1551/Makers/month_1/week_4/solo_work/diary/spec/feature/see_list_of_all_entries_spec.rb": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
       ]
     },
-    "timestamp": 1553856690
+    "timestamp": 1553859255
   }
 }

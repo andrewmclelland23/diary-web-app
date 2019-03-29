@@ -4,9 +4,9 @@ def test_db_setup
 
   p "Setting up test database..."
 
-  connection = PG.connect(dbname: 'bookmark_manager_test')
+  connection = PG.connect(dbname: 'diary_test')
 
   # Clear the bookmarks table
-  connection.exec("DROP TABLE bookmarks;")
-  connection.exec("CREATE TABLE bookmarks(id SERIAL PRIMARY KEY, url VARCHAR(60), title VARCHAR(50));")
+  connection.exec("DROP TABLE entries;")
+  connection.exec("CREATE TABLE entries(id SERIAL PRIMARY KEY, title VARCHAR(60), entry VARCHAR(200));")
 end

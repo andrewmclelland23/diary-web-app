@@ -1,6 +1,6 @@
 feature 'Adding a diary entry' do
   scenario 'I can enter a title and some text and submit it' do
-    visit '/'
+    visit '/diary/add'
     fill_in 'title', with: 'test_title'
     fill_in 'entry', with: 'test_entry'
     click_button 'Submit'
