@@ -28,5 +28,5 @@ RSpec.configure do |config|
   require File.join(File.dirname(__FILE__), '..', 'app.rb')
 
   # tell Capybara about our app class
-  Capybara.app = BookmarkManager
+  Capybara.app = DiaryApp
 end
